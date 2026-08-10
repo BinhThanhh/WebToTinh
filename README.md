@@ -54,25 +54,36 @@ Bây giờ, hãy biến kho lưu trữ chứa code của bạn thành một tran
 
 ---
 
-## 🔔 Cách Nhận Thông Báo Ngày Hẹn Về Máy Của Bạn
+## 🔔 Cách Nhận Thông Báo Ngày Hẹn Về Máy Của Bạn (Tự Động Gửi Ngầm)
 
-Trang web hỗ trợ 2 cách nhận thông báo khi người ấy chọn ngày hẹn hò:
+Để người ấy **không cần bấm thêm nút "Submit"** trên GitHub (tránh gây bối rối), trang web hỗ trợ 2 kênh gửi thông báo tự động hoàn toàn ẩn (gửi ngầm):
 
-### Cách 1: Qua GitHub Issues (Mặc định - An toàn nhất)
-* **Nguyên lý:** Khi người ấy chọn ngày hẹn và bấm xác nhận, trang web sẽ tự động mở trang tạo **GitHub Issue** mới thuộc kho lưu trữ của bạn. Nội dung ngày hẹn sẽ được tự động soạn sẵn, người ấy chỉ việc bấm nút "Submit".
-* **Cách bạn nhận tin:** Bạn sẽ ngay lập tức nhận được một email từ GitHub thông báo về điện thoại/máy tính của bạn (tới địa chỉ email đăng ký tài khoản GitHub).
-* **Ưu điểm:** Hoàn toàn bảo mật, không cần cấu hình phức tạp.
+### Kênh 1: Gửi ngầm về Email cá nhân bằng Web3Forms (Khuyên dùng)
+* **Ưu điểm:** Tự động gửi email thông báo về hộp thư cá nhân (Gmail, Outlook,...) của bạn ngay khi người ấy nhấn "Xác nhận ngày hẹn". Người ấy hoàn toàn không thấy trang chuyển hướng hay cần nhấn thêm nút gì khác.
+* **Cách thiết lập:**
+  1. Truy cập vào trang web [Web3Forms](https://web3forms.com/) (miễn phí, không cần mật khẩu).
+  2. Điền địa chỉ email bạn muốn nhận thông báo ở mục đăng ký và nhấn **Create Access Key**.
+  3. Kiểm tra email của bạn để lấy mã Access Key (chuỗi ký tự dài).
+  4. Mở file [config.js](file:///c:/Users/binhm/Desktop/CuteWeb/config.js) và dán mã key đó vào:
+     ```javascript
+     web3formsAccessKey: "MÃ-ACCESS-KEY-CỦA-BẠN",
+     ```
+  5. Lưu file và tải lên lại GitHub.
 
-### Cách 2: Qua Discord Webhook (Thông báo trực tiếp vào phòng Chat Discord)
-Nếu bạn muốn thông báo hiển thị trực tiếp và bí mật vào phòng chat Discord của bạn:
-1. Mở Discord trên máy tính, vào máy chủ của bạn -> Nhấp chuột vào hình bánh răng bên cạnh tên kênh chat -> Chọn mục **Integrations** (Liên kết) -> Chọn **Webhooks** -> Bấm **Create Webhook** -> Chọn **Copy Webhook URL**.
-2. Mở file `config.js` của bạn trên máy tính.
-3. Dán link vừa copy vào dòng số 6:
-   ```javascript
-   discordWebhookUrl: "https://discord.com/api/webhooks/xxxxxx/xxxxxx",
-   ```
-4. Lưu file và tải file `config.js` đã sửa lên lại GitHub.
-5. Từ bây giờ, mỗi khi người ấy chọn ngày hẹn, điện thoại/máy tính của bạn sẽ lập tức nhận được tin nhắn báo từ Discord!
+### Kênh 2: Gửi ngầm về kênh Discord cá nhân (Thông báo tức thì về điện thoại)
+* **Ưu điểm:** Thông báo nhảy thẳng vào ứng dụng Discord trên điện thoại/máy tính của bạn cực nhanh và âm thầm.
+* **Cách thiết lập:**
+  1. Mở Discord trên máy tính, vào máy chủ của bạn -> Nhấp chuột vào hình bánh răng bên cạnh tên kênh chat -> Chọn mục **Integrations** (Liên kết) -> Chọn **Webhooks** -> Bấm **Create Webhook** -> Chọn **Copy Webhook URL**.
+  2. Mở file [config.js](file:///c:/Users/binhm/Desktop/CuteWeb/config.js) và dán link vừa copy vào:
+     ```javascript
+     discordWebhookUrl: "https://discord.com/api/webhooks/xxxxxx/xxxxxx",
+     ```
+  3. Lưu file và tải lên lại GitHub.
+
+---
+
+### ⚠️ Lưu ý về GitHub Issues (Chế độ dự phòng khi không cài đặt 2 kênh trên)
+Nếu bạn giữ nguyên file `config.js` trống (không điền Webhook và cũng không điền Web3Forms Key), trang web sẽ tự động sử dụng cơ chế mở trang **GitHub Issue** để gửi tin nhắn. Trong trường hợp này, người ấy sẽ phải bấm nút **Submit new issue** trên trang GitHub thì bạn mới nhận được email báo. Do đó, hãy cấu hình **Kênh 1 hoặc Kênh 2** để người ấy có trải nghiệm tự động mượt mà nhất nhé!
 
 ---
 

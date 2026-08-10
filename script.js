@@ -305,30 +305,55 @@ function sendNotification(date) {
                     window.location.hostname === "127.0.0.1" || 
                     window.location.protocol === "file:";
 
-    // 1. Send via Discord Webhook if configured
-    if (DISCORD_WEBHOOK_URL && DISCORD_WEBHOOK_URL.startsWith("https://discord.com/api/webhooks/")) {
-        fetch(DISCORD_WEBHOOK_URL, {
+    const discordUrl = CONFIG.discordWebhookUrl;
+    const web3key = CONFIG.web3formsAccessKey;
+
+    // 1. Send via Discord Webhook if configured (Fully silent/automatic)
+    if (discordUrl && discordUrl.startsWith("https://discord.com/api/webhooks/")) {
+        fetch(discordUrl, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                content: `❤️ **CÓ TIN VUI!** Người ấy đã đồng ý đi date cùng cậu vào ngày **${date}** rồi nhé! Chuẩn bị đi thôiii ✨`
+                content: `❤️ **CÓ TIN VUI!** Người ấy đã đồng ý đi chơi cùng cậu vào ngày **${date}** rồi nhé! Chuẩn bị đi thôiii ✨`
             })
         }).then(response => {
             console.log("Discord notification sent successfully!");
         }).catch(err => {
             console.error("Failed to send Discord webhook:", err);
             if (isLocal) {
-                alert(`[Thử nghiệm Local] Đã thử gửi Discord Webhook nhưng gặp lỗi kết nối (CORS). Ngày đã chọn: ${date}`);
-            } else {
-                createGitHubIssueRedirect(date);
+                alert(`[Thử nghiệm Local] Gửi Discord Webhook lỗi. Ngày đã chọn: ${date}`);
             }
         });
-    } else {
-        // 2. Default route: Open GitHub Issue to trigger free desktop notification/email
+    } 
+    // 2. Send via Web3Forms (Email) if configured (Fully silent/automatic)
+    else if (web3key) {
+        fetch("https://api.web3forms.com/submit", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify({
+                access_key: web3key,
+                subject: "Lịch hẹn Date mới! ❤️",
+                from_name: "Lời Confession Từ Crush",
+                message: `Người ấy đã đồng ý đi date cùng bạn vào ngày: ${date} 🎉`
+            })
+        }).then(response => {
+            console.log("Email notification sent via Web3Forms successfully!");
+        }).catch(err => {
+            console.error("Failed to send email via Web3Forms:", err);
+            if (isLocal) {
+                alert(`[Thử nghiệm Local] Gửi email Web3Forms lỗi. Ngày đã chọn: ${date}`);
+            }
+        });
+    } 
+    // 3. Fallback: Open GitHub Issue (Crush needs to click Submit)
+    else {
         if (isLocal) {
-            alert(`[Chế độ thử nghiệm cục bộ] Lịch hẹn đi chơi vào ngày ${date} đã được lưu thành công!\n\nSau khi bạn đưa code lên GitHub theo hướng dẫn của README.md, tính năng này sẽ tự động mở liên kết tạo Báo cáo hẹn hò (GitHub Issue) trên kho lưu trữ của bạn để thông báo về máy.`);
+            alert(`[Chế độ thử nghiệm cục bộ] Lịch hẹn đi chơi vào ngày ${date} đã được lưu thành công!\n\nLưu ý: Để thông báo gửi ngầm tự động 100% (không cần người ấy bấm Submit trên GitHub), hãy mở config.js dán Link Discord Webhook hoặc mã Web3Forms Access Key vào nhé! Hướng dẫn chi tiết có trong README.md.`);
         } else {
             createGitHubIssueRedirect(date);
         }

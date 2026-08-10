@@ -2,9 +2,13 @@
 // Bạn có thể dễ dàng thay đổi tất cả lời nhắn, câu chữ ở đây mà không cần đụng vào code HTML/JS chính.
 
 const CONFIG = {
-    // Nếu muốn nhận tin nhắn báo về Discord ngay khi người ấy chọn ngày, 
-    // hãy dán link Discord Webhook của bạn vào đây:
-    discordWebhookUrl: "", 
+    // 1. Nhận tin nhắn báo về Discord (Tự động gửi ngầm 100%, khuyên dùng)
+    // Hướng dẫn lấy link Webhook có trong file README.md
+    discordWebhookUrl: "",
+
+    // 2. Nhận tin nhắn báo về Email cá nhân (Tự động gửi ngầm 100%, khuyên dùng)
+    // Đăng ký lấy mã key miễn phí trong 10 giây tại: https://web3forms.com/
+    web3formsAccessKey: "70236b49-0db9-4512-b05a-99628f10e2bf",
 
     // --- STAGE 1: Bức thư ban đầu ---
     stage1: {
