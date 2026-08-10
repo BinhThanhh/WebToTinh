@@ -41,8 +41,8 @@ const CONFIG = {
 
     // --- STAGE 3: Chọn ngày đi Date ---
     stage3: {
-        title: "Tuyệt vời quá! Tớ hạnh phúc lắm! 🎉❤️",
-        prompt: "Chúng mình sẽ đi chơi vào ngày nào nhỉ? Hãy chọn một ngày thật đẹp nhé: 👇",
+        title: "Lên lịch hẹn hò thôi nào! 🌸✨",
+        prompt: "Cậu hãy chọn một ngày thật đẹp để chúng mình đi chơi nhé!",
         confirmButtonText: "Xác nhận ngày hẹn ❤️"
     },
 

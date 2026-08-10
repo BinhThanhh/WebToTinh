@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,25 +8,28 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <!-- Google Fonts for cute and hand-written vibes -->
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;600;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <!-- Floating Hearts Background Container -->
     <div class="hearts-background" id="heartsBg"></div>
 
 
     <div class="app-container">
-        
+
         <!-- STAGE 1: Envelope (Bức thư lãng mạn) -->
-        <div class="stage" id="stage1">
+        <div class="stage hidden" id="stage1">
             <div class="confession-title">Tớ có một bức thư gửi cho cậu... 🌸</div>
             <div class="envelope-wrapper">
                 <div class="envelope" id="envelope">
                     <div class="letter">
                         <div class="letter-text">
                             <span class="highlight">Gửi Cậu,</span>
-                            <p>Tớ đã gom góp tất cả những khoảnh khắc dịu dàng nhất, vẽ nên một chút tình cảm bé nhỏ này gửi tặng cậu.</p>
+                            <p>Tớ đã gom góp tất cả những khoảnh khắc dịu dàng nhất, vẽ nên một chút tình cảm bé nhỏ này
+                                gửi tặng cậu.</p>
                             <p>Hãy bấm nút bên dưới nhé! 👇</p>
                         </div>
                     </div>
@@ -43,24 +47,29 @@
                     <!-- Cute Animated SVG Hearts/Cat -->
                     <div class="cute-couple-svg">
                         <svg viewBox="0 0 100 100" class="heart-pulse-svg">
-                            <path d="M12 4.419c-2.826-5.695-11.999-4.064-11.999 3.27 0 7.27 9.903 10.938 11.999 15.311 2.096-4.373 12-8.041 12-15.311 0-7.327-9.17-8.972-12-3.27z" transform="translate(38, 30)" fill="#ff4d6d"/>
+                            <path
+                                d="M12 4.419c-2.826-5.695-11.999-4.064-11.999 3.27 0 7.27 9.903 10.938 11.999 15.311 2.096-4.373 12-8.041 12-15.311 0-7.327-9.17-8.972-12-3.27z"
+                                transform="translate(38, 30)" fill="#ff4d6d" />
                             <circle cx="30" cy="55" r="8" fill="#ffb3c1" />
                             <circle cx="70" cy="55" r="8" fill="#ffb3c1" />
                             <!-- Blushing cheeks -->
-                            <ellipse cx="28" cy="57" rx="3" ry="1.5" fill="#ff4d6d" opacity="0.6"/>
-                            <ellipse cx="72" cy="57" rx="3" ry="1.5" fill="#ff4d6d" opacity="0.6"/>
+                            <ellipse cx="28" cy="57" rx="3" ry="1.5" fill="#ff4d6d" opacity="0.6" />
+                            <ellipse cx="72" cy="57" rx="3" ry="1.5" fill="#ff4d6d" opacity="0.6" />
                             <!-- Eyes -->
-                            <circle cx="32" cy="53" r="1.5" fill="#5c3d48"/>
-                            <circle cx="68" cy="53" r="1.5" fill="#5c3d48"/>
+                            <circle cx="32" cy="53" r="1.5" fill="#5c3d48" />
+                            <circle cx="68" cy="53" r="1.5" fill="#5c3d48" />
                             <!-- Cute Smiles -->
-                            <path d="M 31,56 Q 32.5,58 34,56" fill="none" stroke="#5c3d48" stroke-width="1.5" stroke-linecap="round"/>
-                            <path d="M 66,56 Q 67.5,58 69,56" fill="none" stroke="#5c3d48" stroke-width="1.5" stroke-linecap="round"/>
+                            <path d="M 31,56 Q 32.5,58 34,56" fill="none" stroke="#5c3d48" stroke-width="1.5"
+                                stroke-linecap="round" />
+                            <path d="M 66,56 Q 67.5,58 69,56" fill="none" stroke="#5c3d48" stroke-width="1.5"
+                                stroke-linecap="round" />
                         </svg>
                     </div>
                 </div>
-                <h1 class="main-question">Cậu có muốn làm người đồng hành cùng tớ trên chặng đường phía trước không? 🥺💖</h1>
+                <h1 class="main-question">Cậu có muốn làm người đồng hành cùng tớ trên chặng đường phía trước không?
+                    🥺💖</h1>
                 <p class="subtitle">Đừng từ chối tớ nhé, tớ sẽ buồn lắm đó...</p>
-                
+
                 <div class="btn-group">
                     <button class="btn btn-yes" id="yesBtn">Đồng ý luôn! 🥰</button>
                     <button class="btn btn-no" id="noBtn">Không nha 😜</button>
@@ -69,25 +78,28 @@
         </div>
 
         <!-- STAGE 3: Date Picker (Chọn ngày hẹn hò) -->
-        <div class="stage hidden" id="stage3">
+        <div class="stage" id="stage3">
             <div class="card glass">
                 <div class="avatar-container">
                     <svg viewBox="0 0 100 100" class="calendar-svg-icon">
-                        <rect x="20" y="25" width="60" height="55" rx="8" fill="#fff" stroke="#ff85a1" stroke-width="4"/>
-                        <rect x="20" y="25" width="60" height="15" fill="#ff85a1" rx="4"/>
+                        <rect x="20" y="25" width="60" height="55" rx="8" fill="#fff" stroke="#ff85a1"
+                            stroke-width="4" />
+                        <rect x="20" y="25" width="60" height="15" fill="#ff85a1" rx="4" />
                         <circle cx="35" cy="25" r="4" fill="#ff4d6d" />
                         <circle cx="65" cy="25" r="4" fill="#ff4d6d" />
                         <!-- Hearts inside calendar -->
-                        <path d="M12 4.419c-2.826-5.695-11.999-4.064-11.999 3.27 0 7.27 9.903 10.938 11.999 15.311 2.096-4.373 12-8.041 12-15.311 0-7.327-9.17-8.972-12-3.27z" transform="translate(38, 48) scale(1)" fill="#ff4d6d"/>
+                        <path
+                            d="M12 4.419c-2.826-5.695-11.999-4.064-11.999 3.27 0 7.27 9.903 10.938 11.999 15.311 2.096-4.373 12-8.041 12-15.311 0-7.327-9.17-8.972-12-3.27z"
+                            transform="translate(38, 48) scale(1)" fill="#ff4d6d" />
                     </svg>
                 </div>
                 <h2 class="title-love">Tuyệt vời quá! Tớ hạnh phúc lắm! 🎉❤️</h2>
                 <p class="prompt-text">Chúng mình sẽ đi chơi vào ngày nào nhỉ? Hãy chọn một ngày thật đẹp nhé: 👇</p>
-                
+
                 <div class="date-selector-wrapper">
                     <input type="date" id="dateInput" class="cute-date-input">
                 </div>
-                
+
                 <button class="btn btn-primary btn-sparkle" id="confirmDateBtn">Xác nhận ngày hẹn ❤️</button>
             </div>
         </div>
@@ -104,21 +116,23 @@
                             <path d="M 30,65 Q 40,55 50,65 L 50,75 L 30,75 Z" fill="#ffe5ec" />
                             <polygon points="30,65 35,50 42,62" fill="#ffe5ec" />
                             <polygon points="50,65 45,50 38,62" fill="#ffe5ec" />
-                            <circle cx="38" cy="62" r="1.5" fill="#5c3d48"/>
-                            <circle cx="48" cy="62" r="1.5" fill="#5c3d48"/>
-                            <path d="M 41,65 Q 43,67 45,65" fill="none" stroke="#5c3d48" stroke-width="1"/>
-                            
+                            <circle cx="38" cy="62" r="1.5" fill="#5c3d48" />
+                            <circle cx="48" cy="62" r="1.5" fill="#5c3d48" />
+                            <path d="M 41,65 Q 43,67 45,65" fill="none" stroke="#5c3d48" stroke-width="1" />
+
                             <!-- Cat Right (Cream) -->
                             <path d="M 50,75 A 20,20 0 0,1 90,75 L 90,80 L 50,80 Z" fill="#fdf0d5" />
                             <path d="M 50,65 Q 60,55 70,65 L 70,75 L 50,75 Z" fill="#fdf0d5" />
                             <polygon points="50,65 55,50 62,62" fill="#fdf0d5" />
                             <polygon points="70,65 65,50 58,62" fill="#fdf0d5" />
-                            <circle cx="58" cy="62" r="1.5" fill="#5c3d48"/>
-                            <circle cx="68" cy="62" r="1.5" fill="#5c3d48"/>
-                            <path d="M 61,65 Q 63,67 65,65" fill="none" stroke="#5c3d48" stroke-width="1"/>
-                            
+                            <circle cx="58" cy="62" r="1.5" fill="#5c3d48" />
+                            <circle cx="68" cy="62" r="1.5" fill="#5c3d48" />
+                            <path d="M 61,65 Q 63,67 65,65" fill="none" stroke="#5c3d48" stroke-width="1" />
+
                             <!-- Heart on top -->
-                            <path d="M12 4.419c-2.826-5.695-11.999-4.064-11.999 3.27 0 7.27 9.903 10.938 11.999 15.311 2.096-4.373 12-8.041 12-15.311 0-7.327-9.17-8.972-12-3.27z" transform="translate(48, 25) scale(0.8)" fill="#ff4d6d" class="pulsing-heart"/>
+                            <path
+                                d="M12 4.419c-2.826-5.695-11.999-4.064-11.999 3.27 0 7.27 9.903 10.938 11.999 15.311 2.096-4.373 12-8.041 12-15.311 0-7.327-9.17-8.972-12-3.27z"
+                                transform="translate(48, 25) scale(0.8)" fill="#ff4d6d" class="pulsing-heart" />
                         </svg>
                     </div>
                 </div>
@@ -126,7 +140,8 @@
                 <div class="message-box">
                     <p class="final-text">Lịch hẹn đã được lưu và gửi tới tớ rồi nha! </p>
                     <p class="date-highlight" id="finalDateDisplay">Ngày hẹn: --/--/----</p>
-                    <p class="note-text">Hãy chuẩn bị một tâm hồn thật đẹp và một bộ quần áo thật xinh nhé. Tớ sẽ đón cậu! 🥰✨</p>
+                    <p class="note-text">Hãy chuẩn bị một tâm hồn thật đẹp và một bộ quần áo thật xinh nhé. Tớ sẽ đón
+                        cậu! 🥰✨</p>
                 </div>
             </div>
         </div>
@@ -139,4 +154,5 @@
     <script src="config.js"></script>
     <script src="script.js"></script>
 </body>
+
 </html>
