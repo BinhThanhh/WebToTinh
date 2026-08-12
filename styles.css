@@ -504,8 +504,83 @@ body {
     z-index: 99;
 }
 
+/* Slideshow memory styles */
+.slideshow-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.slideshow-container {
+    width: 100%;
+    height: 380px;
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.slideshow-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform 0.5s ease;
+}
+
+.slideshow-img:hover {
+    transform: scale(1.03);
+}
+
+.slideshow-title {
+    font-family: var(--font-heading);
+    font-size: 1.6rem;
+    color: var(--accent);
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.slideshow-desc {
+    font-size: 0.95rem;
+    color: var(--text-main);
+    line-height: 1.5;
+    margin-bottom: 15px;
+    padding: 0 10px;
+}
+
+.slideshow-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--text-muted);
+    opacity: 0.4;
+    transition: all 0.3s ease;
+}
+
+.dot.active {
+    background-color: var(--accent);
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+/* Smooth fade transition for slideshow card content changes */
+.fade-out-slide {
+    opacity: 0;
+    transform: scale(0.98);
+}
+
 /* Responsive Tweaks */
 @media (max-width: 480px) {
+    .slideshow-container {
+        height: 320px;
+    }
+
     .card {
         padding: 30px 20px;
         border-radius: 24px;

@@ -10,7 +10,6 @@ let confettiInterval;
 let stopConfettiTimeoutId = null;
 const stage1 = document.getElementById("stage1");
 const stage2 = document.getElementById("stage2");
-const stage3 = document.getElementById("stage3");
 const stage4 = document.getElementById("stage4");
 
 // --- LOAD TEXTS FROM CONFIG ---
@@ -36,34 +35,14 @@ function initTextContent() {
     const openBtn = document.getElementById("openLetterBtn");
     if (openBtn) openBtn.innerText = CONFIG.stage1.openButtonText;
 
-    // Stage 2
-    const s2Question = document.querySelector(".main-question");
-    if (s2Question) s2Question.innerText = CONFIG.stage2.question;
-    
-    const s2Subtitle = document.querySelector("#stage2 .subtitle");
-    if (s2Subtitle) s2Subtitle.innerText = CONFIG.stage2.subtitle;
-    
-    const yesBtn = document.getElementById("yesBtn");
-    if (yesBtn) yesBtn.innerText = CONFIG.stage2.yesButtonText;
-
-    // Stage 3
-    const s3Title = document.querySelector("#stage3 .title-love");
-    if (s3Title) s3Title.innerText = CONFIG.stage3.title;
-    
-    const s3Prompt = document.querySelector("#stage3 .prompt-text");
-    if (s3Prompt) s3Prompt.innerText = CONFIG.stage3.prompt;
-    
-    const confirmBtn = document.getElementById("confirmDateBtn");
-    if (confirmBtn) confirmBtn.innerText = CONFIG.stage3.confirmButtonText;
-
     // Stage 4
-    const s4Title = document.querySelector("#stage4 .title-love");
+    const s4Title = document.getElementById("finalTitle");
     if (s4Title) s4Title.innerText = CONFIG.stage4.title;
     
-    const s4Msg = document.querySelector("#stage4 .final-text");
+    const s4Msg = document.getElementById("finalText");
     if (s4Msg) s4Msg.innerText = CONFIG.stage4.message;
     
-    const s4Note = document.querySelector("#stage4 .note-text");
+    const s4Note = document.getElementById("finalNote");
     if (s4Note) s4Note.innerText = CONFIG.stage4.note;
 }
 
@@ -123,6 +102,9 @@ function openLetter() {
             stage1.classList.add("hidden");
             stage2.classList.remove("hidden");
             
+            // Initialize the slideshow when Stage 2 loads
+            initSlideshow();
+            
             // Fade in Stage 2 confession card with zoom-in bounce
             stage2.style.opacity = "0";
             stage2.style.transform = "scale(0.95)";
@@ -138,226 +120,86 @@ envelope.addEventListener("click", openLetter);
 openLetterBtn.addEventListener("click", openLetter);
 
 
-// --- STAGE 2: CONFESSION (YES/NO BUTTONS) ---
-const yesBtn = document.getElementById("yesBtn");
-const noBtn = document.getElementById("noBtn");
+// --- STAGE 2: SLIDESHOW (KỶ NIỆM) ---
+let currentSlide = 0;
+const slideshowImg = document.getElementById("slideshowImg");
+const slideshowTitle = document.getElementById("slideshowTitle");
+const slideshowDesc = document.getElementById("slideshowDesc");
+const slideshowDotsContainer = document.getElementById("slideshowDots");
+const nextSlideBtn = document.getElementById("nextSlideBtn");
 
-// Fleeing "No" Button Logic
-function fleeNoButton(e) {
-    noHoverCount++;
-    
-    // Shake effect
-    noBtn.classList.add("btn-shake");
-    setTimeout(() => {
-        noBtn.classList.remove("btn-shake");
-    }, 300);
-    
-    // Change position to absolute
-    noBtn.style.position = "fixed";
-    
-    // Get viewport dimensions
-    const btnWidth = noBtn.offsetWidth;
-    const btnHeight = noBtn.offsetHeight;
-    const pad = 20; // border padding
-    
-    const maxX = window.innerWidth - btnWidth - pad;
-    const maxY = window.innerHeight - btnHeight - pad;
-    
-    // Calculate new random coordinate
-    let newX = Math.random() * maxX;
-    let newY = Math.random() * maxY;
-    
-    // Avoid position directly under cursor
-    const mouseX = e.clientX || (e.touches && e.touches[0].clientX) || 0;
-    const mouseY = e.clientY || (e.touches && e.touches[0].clientY) || 0;
-    
-    if (Math.abs(newX - mouseX) < 100 && Math.abs(newY - mouseY) < 100) {
-        newX = (newX + 200) % maxX;
-        newY = (newY + 200) % maxY;
-    }
-    
-    noBtn.style.left = `${Math.max(pad, newX)}px`;
-    noBtn.style.top = `${Math.max(pad, newY)}px`;
-
-    // Make "Yes" button larger & cute responses
-    const currentScale = 1 + (noHoverCount * 0.15);
-    yesBtn.style.transform = `scale(${currentScale})`;
-    
-    // Change text of No button to be funny
-    const noPhrases = CONFIG.stage2.noButtonPhrases;
-    noBtn.innerText = noPhrases[Math.min(noHoverCount, noPhrases.length - 1)];
+function renderDots() {
+    if (!slideshowDotsContainer) return;
+    slideshowDotsContainer.innerHTML = "";
+    CONFIG.stage2.images.forEach((_, idx) => {
+        const dot = document.createElement("span");
+        dot.classList.add("dot");
+        if (idx === 0) dot.classList.add("active");
+        slideshowDotsContainer.appendChild(dot);
+    });
 }
 
-noBtn.addEventListener("mouseover", fleeNoButton);
-noBtn.addEventListener("touchstart", (e) => {
-    e.preventDefault(); // prevent click behavior on touch
-    fleeNoButton(e);
-});
-noBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    fleeNoButton(e);
-});
-
-// Click "Yes" Button
-yesBtn.addEventListener("click", () => {
-    // Fade out and shrink buttons smoothly
-    yesBtn.classList.add("btn-fade-out");
-    noBtn.classList.add("btn-fade-out");
-    
-    // Trigger Confetti
-    startConfetti();
-    
-    // Transition to Stage 3 (Date Picker)
-    stage2.style.opacity = "0";
-    setTimeout(() => {
-        stage2.classList.add("hidden");
-        stage3.classList.remove("hidden");
-        // Reset styles and positions in the background
-        noBtn.style.position = "";
-        noBtn.style.left = "";
-        noBtn.style.top = "";
-        noBtn.classList.remove("btn-fade-out");
-        yesBtn.classList.remove("btn-fade-out");
-        stopConfetti();
-    }, 1200);
-});
-
-
-// --- STAGE 3: DATE PICKER ---
-const dateInput = document.getElementById("dateInput");
-const confirmDateBtn = document.getElementById("confirmDateBtn");
-const finalDateDisplay = document.getElementById("finalDateDisplay");
-
-// Set minimum date to today and default value to tomorrow
-const today = new Date();
-const tomorrow = new Date(today);
-tomorrow.setDate(tomorrow.getDate() + 1);
-
-const tomorrowStr = tomorrow.toISOString().split("T")[0];
-dateInput.min = today.toISOString().split("T")[0];
-dateInput.value = tomorrowStr;
-
-confirmDateBtn.addEventListener("click", () => {
-    const selectedDate = dateInput.value;
-    if (!selectedDate) {
-        alert("Cậu hãy chọn một ngày đẹp trời để chúng mình đi chơi nhé! 😘");
-        return;
-    }
-    
-    // Format date to display (DD/MM/YYYY)
-    const dateObj = new Date(selectedDate);
-    const day = String(dateObj.getDate()).padStart(2, '0');
-    const month = String(dateObj.getMonth() + 1).padStart(2, '0');
-    const year = dateObj.getFullYear();
-    const formattedDate = `${day}/${month}/${year}`;
-    
-    finalDateDisplay.innerText = `Ngày hẹn: ${formattedDate}`;
-    
-    // Trigger data routing
-    sendNotification(formattedDate);
-    
-    // Switch to Stage 4 (Success)
-    stage3.style.opacity = "0";
-    setTimeout(() => {
-        stage3.classList.add("hidden");
-        stage4.classList.remove("hidden");
-        // Maintain continuous confetti on final screen
-        startConfetti();
-    }, 600);
-});
-
-
-// --- DATA ROUTING & NOTIFICATIONS ---
-
-// Parse GitHub repo name from URL safely
-function getGitHubRepoDetails() {
-    let username = "binh-me"; // Default fallback
-    let repo = "CuteWeb";
-    const hostname = window.location.hostname;
-    const pathname = window.location.pathname;
-    
-    if (hostname.includes("github.io")) {
-        // format: username.github.io/repo/
-        username = hostname.split(".")[0];
-        const pathParts = pathname.split("/").filter(x => x);
-        if (pathParts.length > 0) {
-            repo = pathParts[0];
-        }
-    }
-    return { username, repo };
-}
-
-// Open prefilled GitHub issue URL in new window
-function createGitHubIssueRedirect(date) {
-    const { username, repo } = getGitHubRepoDetails();
-    const issueTitle = encodeURIComponent(`Lịch hẹn Date ❤️`);
-    const issueBody = encodeURIComponent(`Chào bạn! Người ấy đã đồng ý đi chơi cùng bạn vào ngày đặc biệt này:\n\n📅 **Ngày hẹn: ${date}**\n\nChúc hai bạn có một buổi hẹn hò thật vui vẻ và ngọt ngào! 🎉✨`);
-    
-    const githubUrl = `https://github.com/${username}/${repo}/issues/new?title=${issueTitle}&body=${issueBody}`;
-    
-    // Open in new tab
-    window.open(githubUrl, "_blank");
-}
-
-// Function to send data via webhook or GitHub Issues
-function sendNotification(date) {
-    const isLocal = window.location.hostname === "localhost" || 
-                    window.location.hostname === "127.0.0.1" || 
-                    window.location.protocol === "file:";
-
-    const discordUrl = CONFIG.discordWebhookUrl;
-    const web3key = CONFIG.web3formsAccessKey;
-
-    // 1. Send via Discord Webhook if configured (Fully silent/automatic)
-    if (discordUrl && discordUrl.startsWith("https://discord.com/api/webhooks/")) {
-        fetch(discordUrl, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                content: `❤️ **CÓ TIN VUI!** Người ấy đã đồng ý đi chơi cùng cậu vào ngày **${date}** rồi nhé! Chuẩn bị đi thôiii ✨`
-            })
-        }).then(response => {
-            console.log("Discord notification sent successfully!");
-        }).catch(err => {
-            console.error("Failed to send Discord webhook:", err);
-            if (isLocal) {
-                alert(`[Thử nghiệm Local] Gửi Discord Webhook lỗi. Ngày đã chọn: ${date}`);
-            }
-        });
-    } 
-    // 2. Send via Web3Forms (Email) if configured (Fully silent/automatic)
-    else if (web3key) {
-        fetch("https://api.web3forms.com/submit", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            },
-            body: JSON.stringify({
-                access_key: web3key,
-                subject: "Lịch hẹn Date mới! ❤️",
-                from_name: "Lời Confession Từ Crush",
-                message: `Người ấy đã đồng ý đi date cùng bạn vào ngày: ${date} 🎉`
-            })
-        }).then(response => {
-            console.log("Email notification sent via Web3Forms successfully!");
-        }).catch(err => {
-            console.error("Failed to send email via Web3Forms:", err);
-            if (isLocal) {
-                alert(`[Thử nghiệm Local] Gửi email Web3Forms lỗi. Ngày đã chọn: ${date}`);
-            }
-        });
-    } 
-    // 3. Fallback: Open GitHub Issue (Crush needs to click Submit)
-    else {
-        if (isLocal) {
-            alert(`[Chế độ thử nghiệm cục bộ] Lịch hẹn đi chơi vào ngày ${date} đã được lưu thành công!\n\nLưu ý: Để thông báo gửi ngầm tự động 100% (không cần người ấy bấm Submit trên GitHub), hãy mở config.js dán Link Discord Webhook hoặc mã Web3Forms Access Key vào nhé! Hướng dẫn chi tiết có trong README.md.`);
+function updateDots(activeIdx) {
+    const dots = slideshowDotsContainer.querySelectorAll(".dot");
+    dots.forEach((dot, idx) => {
+        if (idx === activeIdx) {
+            dot.classList.add("active");
         } else {
-            createGitHubIssueRedirect(date);
+            dot.classList.remove("active");
         }
+    });
+}
+
+function showSlide(index) {
+    const slideUrl = CONFIG.stage2.images[index];
+    if (!slideUrl) return;
+    
+    // Add a smooth fade-out class to contents
+    const card = document.querySelector(".slideshow-card");
+    if (card) {
+        card.classList.add("fade-out-slide");
+        
+        setTimeout(() => {
+            slideshowImg.src = slideUrl;
+            updateDots(index);
+            
+            card.classList.remove("fade-out-slide");
+        }, 200); // wait for fade-out to complete
+    } else {
+        slideshowImg.src = slideUrl;
+        updateDots(index);
     }
+}
+
+function initSlideshow() {
+    renderDots();
+    showSlide(currentSlide);
+}
+
+if (nextSlideBtn) {
+    nextSlideBtn.addEventListener("click", () => {
+        if (currentSlide < CONFIG.stage2.images.length - 1) {
+            currentSlide++;
+            showSlide(currentSlide);
+        } else {
+            // Transition to Stage 4 (Final Screen)
+            stage2.style.opacity = "0";
+            setTimeout(() => {
+                stage2.classList.add("hidden");
+                stage4.classList.remove("hidden");
+                
+                // Fade in Stage 4
+                stage4.style.opacity = "0";
+                stage4.style.transform = "scale(0.95)";
+                stage4.offsetHeight; // force reflow
+                stage4.style.opacity = "1";
+                stage4.style.transform = "scale(1)";
+                stage4.style.transition = "opacity 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)";
+                
+                startConfetti();
+            }, 500);
+        }
+    });
 }
 
 

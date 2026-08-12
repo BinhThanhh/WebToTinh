@@ -12,44 +12,28 @@ const CONFIG = {
 
     // --- STAGE 1: Bức thư ban đầu ---
     stage1: {
-        title: "Tớ có một bức thư gửi cho cậu... 🌸",
-        greeting: "Gửi Cậu,",
+        title: "Gửi Hà thối... 🌸",
+        greeting: "Gửi Hà thối,",
         paragraphs: [
-            "Tớ đã gom góp tất cả những khoảnh khắc dịu dàng nhất, vẽ nên một chút tình cảm bé nhỏ này gửi tặng cậu.",
-            "Hãy bấm nút bên dưới nhé! 👇"
+            "Đồ con bò"
         ],
         openButtonText: "Mở Thư Ngay ❤️"
     },
 
-    // --- STAGE 2: Lời tỏ tình ---
+    // --- STAGE 2: Thư viện ảnh (Slideshow) ---
     stage2: {
-        question: "Cậu có muốn làm người đồng hành cùng tớ trên chặng đường phía trước không? 🥺💖",
-        subtitle: "Đừng từ chối tớ nhé, tớ sẽ buồn lắm đó...",
-        yesButtonText: "Đồng ý luôn! 🥰",
-        noButtonPhrases: [
-            "Không nha 😜",
-            "Ơ đừng bấm đây...",
-            "Cậu chắc chưa? 🥺",
-            "Nút này bị hỏng rồi!",
-            "Thử lại xem nào 😜",
-            "Có gì đó sai sai...",
-            "Đồng ý bên cạnh đi mà!",
-            "Cậu ghét tớ hả? 😭",
-            "Hết cách rồi nhaaa"
-        ]
+        images: [
+            "assets/img1.png",
+            "assets/img2.png",
+            "assets/img3.png"
+        ],
+        nextButtonText: "Tiếp tục ❤️"
     },
 
-    // --- STAGE 3: Chọn ngày đi Date ---
-    stage3: {
-        title: "Lên lịch hẹn hò thôi nào! 🌸✨",
-        prompt: "Cậu hãy chọn một ngày thật đẹp để chúng mình đi chơi nhé!",
-        confirmButtonText: "Xác nhận ngày hẹn ❤️"
-    },
-
-    // --- STAGE 4: Màn hình thành công ---
+    // --- STAGE 4: Màn hình kết thúc ---
     stage4: {
-        title: "Hẹn hò thôi nào! 💖",
-        message: "Lịch hẹn đã được lưu và gửi tới tớ rồi nha!",
-        note: "Hãy chuẩn bị một tâm hồn thật đẹp và một bộ quần áo thật xinh nhé. Tớ sẽ đón cậu! 🥰✨"
+        title: "thế thôi =))",
+        message: "Cảm ơn Hà thối đã xem hết nhé! 🥰",
+        note: "Chúc một ngày vui vẻ! ✨"
     }
 };
